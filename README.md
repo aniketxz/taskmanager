@@ -1,102 +1,94 @@
-# Taskly — Team Task Manager
+# Team Task Manager
 
-A full-stack team task management application built with Next.js and Node.js.
+A full-stack project management application featuring a Next.js frontend and an Express.js/PostgreSQL backend.
 
-## Tech Stack
+## 🚀 Tech Stack
 
-**Frontend**
-- Next.js 16 (App Router)
-- Tailwind CSS v4
-- TanStack Query v5
-- Zustand v5
-- React Hook Form + Zod
-- @dnd-kit (drag and drop)
-- Recharts
+### Frontend (`/client`)
+- **Next.js 15** (App Router)
+- **Tailwind CSS v4** + Custom Theme
+- **TanStack Query v5** (Data fetching & caching)
+- **Zustand v5** (Auth state management)
+- **React Hook Form + Zod** (Form validation)
+- **@dnd-kit** (Drag and drop Kanban board)
+- **Recharts** (Dashboard charts)
+- **Sonner** (Toast notifications)
 
-**Backend**
-- Node.js + Express
-- TypeScript
-- Drizzle ORM
-- PostgreSQL
-- JWT Authentication
+### Backend (`/server`)
+- **Node.js + Express** (REST API)
+- **TypeScript**
+- **Drizzle ORM** (Database ORM)
+- **PostgreSQL** (Database)
+- **Zod** (Request validation)
+- **JWT & bcryptjs** (Authentication & security)
 
-## Local Setup
+## 📁 Project Structure
 
-### Prerequisites
-- Node.js 18+
-- PostgreSQL database
+```text
+taskmanager/
+├── client/          # Next.js Frontend application
+├── server/          # Express.js Backend application
+└── README.md        # This file
+```
 
-### Backend
+## 💻 Local Setup
 
+### 1. Database Setup
+Ensure you have PostgreSQL installed and running locally, or use a cloud database provider like Neon or Supabase.
+
+### 2. Backend Setup
 ```bash
+# Navigate to the server directory
 cd server
+
+# Install dependencies
 npm install
-```
 
-Create `.env` in `server/`:
-```
-DATABASE_URL=your_postgres_url
-JWT_SECRET=your_secret
-CLIENT_URL=http://localhost:3000
-PORT=5000
-```
+# Create .env file with the following variables:
+# PORT=5000
+# DATABASE_URL=postgresql://user:password@localhost:5432/taskmanager
+# JWT_SECRET=your_secret_key_here
 
-```bash
-npm run db:migrate
+# Push schema to database
+npm run db:push
+
+# Start the development server
 npm run dev
 ```
 
-### Frontend
-
+### 3. Frontend Setup
 ```bash
+# Navigate to the client directory
 cd client
+
+# Install dependencies
 npm install
-```
 
-Create `.env.local` in `client/`:
-```
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
+# Create .env.local file with the backend URL:
+echo "NEXT_PUBLIC_API_URL=http://localhost:5000/api" > .env.local
 
-```bash
+# Start the development server
 npm run dev
 ```
+*(Note: Adjust the `NEXT_PUBLIC_API_URL` if your backend appends `/api` differently or runs on another port.)*
 
-Open [http://localhost:3000](http://localhost:3000)
+## ☁️ Deployment
 
-## Deployment
+### Backend Deployment (e.g., Railway / Render)
+1. Push your repository to GitHub.
+2. Create a new Web Service on Railway, Render, or a similar platform.
+3. Set the **Root Directory** to `server`.
+4. Add the required **Environment Variables** (`DATABASE_URL`, `JWT_SECRET`, `PORT`).
+5. Ensure your build command is `npm run build` and start command is `npm start`.
+6. Deploy!
 
-### Backend (Render)
+### Frontend Deployment (Vercel)
+1. Go to Vercel and import your GitHub repository.
+2. Set the framework preset to **Next.js**.
+3. Set the **Root Directory** to `client`.
+4. Add the Environment Variable: `NEXT_PUBLIC_API_URL=https://<your-backend-domain>.com/api` (Point this to your newly deployed backend).
+5. Deploy!
 
-1. Create a PostgreSQL database on [Render](https://render.com) and copy the Internal Database URL
-2. Create a new Web Service, connect your GitHub repo
-3. Set Root Directory to `server`
-4. Set build and start commands:
-   ```
-   Build: npm install && npm run build
-   Start: npm start
-   ```
-5. Add environment variables:
-   ```
-   DATABASE_URL=internal_db_url_from_step_1
-   JWT_SECRET=your_secret
-   NODE_ENV=production
-   ```
-6. Deploy, then run migrations from the Shell tab:
-   ```bash
-   npm run db:migrate
-   ```
-7. Once frontend is deployed, add:
-   ```
-   CLIENT_URL=https://your-app.vercel.app
-   ```
+## 🔗 API Documentation
 
-### Frontend (Vercel)
-
-1. Import your GitHub repo on [Vercel](https://vercel.com)
-2. Set Root Directory to `client`
-3. Add environment variable:
-   ```
-   NEXT_PUBLIC_API_URL=https://your-app.onrender.com
-   ```
-4. Deploy
+Detailed REST API documentation (Auth, Dashboard, Projects, Members, Tasks) and payload schemas are available in the [`server/README.md`](./server/README.md) file.
